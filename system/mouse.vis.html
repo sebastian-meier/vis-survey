@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Superimpo vs. Juxta</title>
+		<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+		<style>
+			body,html{
+				margin:0;
+				padding:0;
+				font-family: Helvetica, sans-serif;
+			}
+
+			.container{
+				float:left;
+				margin:20px;
+			}
+
+			.title{
+				font-weight:bold;
+				font-size:12px;
+			}
+
+			path{
+				stroke:#000;
+				fill:rgba(0,0,0,0);
+			}
+		</style>
+	</head>
+	<body>
+		<script>
+
+			d3.json('mouse.json.php', function(data){
+
+				var width = 300;
+
+				var maxX = d3.max(data, function(d){
+							return d3.max(d.data, function(d){
+								return d3.max(d.interactions, function(d){
+									return d.x;
+								});
+							});
+						});
+
+				var ratio = width/maxX;
+
+				var maxY = d3.max(data, function(d){
+							return d3.max(d.data, function(d){
+								return d3.max(d.interactions, function(d){
+									return d.y;
+								});
+							});
+						});
+
+				var maxT = d3.max(data, function(d){
+							return d3.max(d.data, function(d){
+								return d3.max(d.interactions, function(d){
+									return d.t;
+								});
+							});
+						});
+
+
+				var height = maxY*ratio;
+
+				var x = d3.scale.linear()
+					.domain([0, maxX])
+					.range([0, width]);
+
+				var y = d3.scale.linear()
+					.domain([0, maxY])
+					.range([0, height]);
+
+				var color = d3.scale.linear()
+					.domain([0, maxT])
+					.range([0.2, 0.6]);
+
+				var lineFunction = d3.svg.line()
+					.x(function(d) { return x(d.x); })
+					.y(function(d) { return y(d.y); })
+					.interpolate("linear");
+
+				var container = d3.select('body').selectAll('div.container')
+					.data(data).enter().append('div')
+						.attr('class', 'container')
+						.attr('title', function(d){ return d.key; });
+
+					container.append('span').attr('class', 'title').text(function(d){ return d.key });
+
+				var svg = container.append('svg')
+							.attr('width', width)
+							.attr('height', height)
+							.style('width', width+'px')
+							.style('height', height+'px');
+
+					svg.selectAll('path')
+						.data(function(d){ return d.data; }).enter().append('path')
+							.attr('d', function(d){
+								return lineFunction(d.interactions);
+							});
+
+			});
+		</script>
+	</body>
+</html>

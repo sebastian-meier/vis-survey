@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Superimpo vs. Juxta</title>
+		<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+		<style>
+			body,html{
+				margin:0;
+				padding:0;
+				font-family: Helvetica, sans-serif;
+			}
+
+			.container{
+				float:left;
+				margin:20px;
+			}
+
+			.title{
+				font-weight:bold;
+				font-size:12px;
+			}
+
+			path{
+				stroke:#000;
+				fill:rgba(0,0,0,0);
+			}
+		</style>
+	</head>
+	<body>
+		<script>
+
+			d3.json('interactions.json.php', function(data){
+
+				var width = 300;
+				var height = 200;
+
+				var x = d3.scale.linear()
+					.domain([0, 5])
+					.range([50, width-50]);
+
+				var y = d3.scale.linear()
+					.domain([0, 2])
+					.range([50, height-50]);
+
+				var tx = function(d){
+					return (d-(Math.floor(d/6)*6));
+				};
+
+				var ty = function(d){
+					return (Math.floor(d/6));
+				};
+
+				var tty = function(d){
+					var i = 0;
+					var ii = (d-(Math.floor(d/6)*6));
+					if( ii % 2 === 0){
+						i = 10;
+					}
+					return i;
+				}
+
+				var lineFunction = d3.svg.line()
+					.x(function(d) { return x(tx((d[0]-1))); })
+					.y(function(d) { return y(ty((d[0]-1)))+tty((d[0]-1)); })
+					.interpolate("linear");
+
+				var container = d3.select('body').selectAll('div.container')
+					.data(data).enter().append('div')
+						.attr('class', 'container')
+						.attr('title', function(d){ return d.key; });
+
+					container.append('span').attr('class', 'title').text(function(d){ return d.key });
+
+				var svg = container.append('svg')
+							.attr('width', width)
+							.attr('height', height)
+							.style('width', width+'px')
+							.style('height', height+'px');
+
+					svg.selectAll('path')
+						.data(function(d){ return d.data; }).enter().append('path')
+							.attr('d', function(d){
+								return lineFunction(d.interactions);
+							});
+
+			});
+		</script>
+	</body>
+</html>

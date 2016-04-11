@@ -1,0 +1,117 @@
+.nasa-container{
+	width:380px;
+}
+
+#reset{
+	position: fixed;
+	right:20px;
+	top:150px;
+}
+
+.btn.btn-nasa{
+	float:left;
+	display: block;
+	height:19px;
+	width:19px;
+	padding:0;
+	background-color:#fff;
+	border-radius: 0;
+	border:none;
+	margin:0;
+}
+
+.btn.btn-nasa:hover{
+	background-color: #ddd;
+}
+
+.btn.btn-nasa.primary,
+.btn.btn-nasa.primary:hover{
+	background-color: #aaa;
+}
+
+.btn-nasa .border{
+	display:block;
+	width:19px;
+	margin-top:12px;
+	height:7px;
+	border-bottom:1px solid #000;
+	border-left:1px solid #000;
+}
+
+.btn-nasa-1{
+	clear:both;
+}
+
+.btn-nasa-1 .border{
+	margin-top:0;
+	height:19px;
+}
+
+.btn-nasa.btn-nasa-3 .border,
+.btn-nasa.btn-nasa-5 .border,
+.btn-nasa.btn-nasa-7 .border,
+.btn-nasa.btn-nasa-9 .border,
+.btn-nasa.btn-nasa-11 .border,
+.btn-nasa.btn-nasa-13 .border,
+.btn-nasa.btn-nasa-15 .border,
+.btn-nasa.btn-nasa-17 .border,
+.btn-nasa.btn-nasa-19 .border{
+	margin-top:2px;
+	height:17px;
+}
+
+.btn-nasa-20 .border{
+}
+
+.btn.btn-nasa-20{
+	border-right:1px solid #000;
+}
+
+.nasa-left{
+	float:left;
+}
+
+.nasa-right{
+	float:right;
+}
+
+.nasa-closer{
+	clear:both;
+	margin-top:20px;
+	visibility: hidden;
+}
+
+input[type="text"]{
+	margin-left:10px;
+}
+
+input[type="radio"],
+input[type="check"],
+input[type="checkbox"]{
+	margin-right:10px;
+}
+
+label.question-label{
+	display: block;
+	width:100%;
+	clear:both;
+	padding-top:30px;
+}
+
+textarea{
+	width:100%;
+	height:150px;
+}
+
+.training-image{
+	width:400px;
+	height:auto;
+}
+
+input[type="button"]{
+	margin-bottom:20px;
+}
+
+input[type="submit"]{
+	margin-bottom:20px;
+}
